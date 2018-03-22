@@ -1,0 +1,10 @@
+<div class="content-block <%= css_class(cb) %> <%= 'hide' if cb.hidden? %>" id="<%= css_id(cb) %>">
+  <% unless cb.hidden? %>
+    <div class="content">
+      <h1><%= ft(cb.title) %></h1>
+      <div class="body">
+        <%= f(cb.body) %>
+      </div>
+    </div>
+  <% end %>
+</div>

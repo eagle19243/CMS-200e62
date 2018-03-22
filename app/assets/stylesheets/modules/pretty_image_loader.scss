@@ -1,0 +1,10 @@
+.wrapper img {
+  &.loading {
+    opacity: 0;
+  }
+
+  &.loaded {
+    transition: opacity 1s;
+    opacity: 1;
+  }
+}

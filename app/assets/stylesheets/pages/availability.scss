@@ -1,0 +1,91 @@
+#availability-wrapper {
+  @extend %c4;
+  margin-bottom: 100px;
+
+  .nounits {
+    max-width: 350px;
+    @extend %large;
+  }
+
+  h1 {
+    @extend %large;
+    margin-bottom: $small_margin;
+  }
+
+  table {
+    width: 100%;
+    text-align: left;
+    @extend %regular;
+
+    @include tab {
+      font-size: $small_size;
+      line-height: $small_leading;
+    }
+
+    @include hand {
+      .no-mobile { display: none; }
+      font-size: $small_size;
+      line-height: $small_leading;
+    }
+
+    tr.table-heading {
+      border-top: 1px solid $light_gray;
+
+      th { padding: 17px 0 15px 0; }
+    }
+
+    .row {
+      border-bottom: 1px solid $light_gray;
+      &.even { background-color: $bg_gray; }
+      &.unit:hover {
+        cursor: pointer;
+        background-color: $light_gray;
+      }
+
+      td { padding: 17px 0 15px 0; }
+    }
+  }
+}
+
+.lightbox-slide {
+  &.floor-plan {
+    .image {
+      background-color: $white;
+      background-position: center center;
+      //border: 20px solid $bg_gray;
+    }
+
+    .lightbox-slide-content {
+      padding-left: 200px;
+
+      @include hand {
+        padding-left: 0;
+      }
+    }
+
+    .unit-details {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+
+      @include hand {
+        text-align: center;
+        left: 0;
+        width: 100%;
+
+        h1,
+        .space,
+        .cost {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.unit-details {
+  h1 { @extend %regular; }
+  h1, .space, .cost { @include margin(bottom, $small_margin); }
+  .name { border-bottom: 1px solid $black; }
+  .floor-plan a { border-bottom: 1px solid $gray !important; }
+}

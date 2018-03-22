@@ -1,0 +1,13 @@
+.logo {
+  @extend %inlineblock;
+  width: 140px;
+  height: 24px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  @include hand { left: 10px; }
+  z-index: 100000;
+  text-indent: -9999px;
+  overflow: hidden;
+  @include set_background('200e62-logo', 'png', '140px 24px', '0 0', 'no-repeat');
+}

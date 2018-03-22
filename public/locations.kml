@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+	<Document>
+		<name>Locations for 200 E 62 NY.</name>
+		<atom:link rel="related" href="http://www.200e62ny.com" />
+		<Folder>
+			<Placemark>
+				<name><![CDATA[200 E 62 NY]]></name>
+				<address><![CDATA[200 East 62 Street, New York, New York, 10065, United States]]></address>
+				<description><![CDATA[]]></description>
+				<Point>
+					<coordinates>-73.9649721,40.7630942,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+	</Document>
+</kml>

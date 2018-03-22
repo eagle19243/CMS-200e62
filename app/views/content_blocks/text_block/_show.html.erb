@@ -1,0 +1,6 @@
+<div class="content-block <%= css_class(cb) %> <%= 'large' if cb.large? %>" id="<%= css_id(cb) %>">
+  <div class="text">
+    <%= content_tag(:h2, cb.title, class: 'title') if cb.title.present? %>
+    <%= f(cb.body) %>
+  </div>
+</div>

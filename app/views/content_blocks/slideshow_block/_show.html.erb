@@ -1,0 +1,23 @@
+<div class="content-block <%= css_class(cb) %>" id="<%= css_id(cb) %>">
+  <div class="slides <%= color_css_class(@article.issue) if @article %>">
+    <% cb.slides.each do |slide| %>
+      <div class="slide">
+        <%= content_tag :div,
+                        style: "background-image: url('#{slide.image.attachment_url(:full_screen)}')",
+                        class: 'slide-image lightboxable',
+                        data: {
+                          id: css_lightbox_id(cb),
+                          hires: slide.image.attachment_url(:full_screen),
+                          caption: strip_tags(slide.caption)
+                        } do %>
+
+          <%= image_tag slide.image.attachment_url(:full_screen) %>
+        <% end %>
+
+        <div class="slide-caption">
+          <%= s(slide.caption) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

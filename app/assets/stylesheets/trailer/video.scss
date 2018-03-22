@@ -1,0 +1,71 @@
+$primary-background-color: white;
+$primary-background-transparency: 1;
+
+$secondary-background-color: black;
+$secondary-background-transparency: 1;
+
+$text-font-family: $sans;
+
+.vjs-icon-play {
+  background: transparent image-url('video_icons/play.png') no-repeat scroll center center;
+  background-size: 15px 15px;
+}
+
+.vjs-icon-pause {
+  background: transparent image-url('video_icons/pause.png') no-repeat scroll center center;
+  background-size: 15px 15px;
+}
+
+.vjs-icon-volume-mute {
+  background: transparent image-url('video_icons/audio-off.png') no-repeat scroll center left;
+  background-size: 19px 15px;
+}
+
+.vjs-icon-volume-low,
+.vjs-icon-volume-mid,
+.vjs-icon-volume-high, {
+  background: transparent image-url('video_icons/audio-on.png') no-repeat scroll center left;
+  background-size: 19px 15px;
+}
+
+.vjs-icon-fullscreen-enter,
+.vjs-icon-fullscreen-exit {
+  background: transparent image-url('video_icons/fullscreen.png') no-repeat scroll center center;
+  background-size: 20px 15px;
+}
+
+@import "trailer/videojs/video-js";
+
+.video-js .vjs-play-control {
+  width: 15px;
+  margin-right: 22px;
+}
+
+.video-js .vjs-volume-menu-button {
+  width: 20px;
+  margin-right: 22px;
+}
+
+.video-js .vjs-fullscreen-control {
+  width: 20px;
+  margin-left: 22px;
+}
+
+.video-js .vjs-time-control {
+  @include flex(none);
+  display: block;
+  font-size: $regular-size;
+  line-height: 2.1em;
+  width: 2.2em;
+  text-align: center;
+}
+
+.video-js .vjs-time-divider {
+  width: 1em;
+  padding-left: 0.05em;
+}
+
+.video-js .vjs-spacer {
+  @include flex(auto);
+  display: block;
+}

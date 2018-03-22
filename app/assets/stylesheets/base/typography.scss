@@ -1,0 +1,22 @@
+h1, h2, h3, h4, h5, h6 {
+  @extend %regular;
+  font-weight: normal;
+}
+
+%large {
+  font-size: $large_size;
+  line-height: $large_leading;
+  letter-spacing: 0;
+}
+
+%regular {
+  font-size: $regular_size;
+  line-height: $regular_leading;
+  letter-spacing: 0;
+}
+
+%small {
+  font-size: $small_size;
+  line-height: $small_leading;
+  letter-spacing: 0;
+}

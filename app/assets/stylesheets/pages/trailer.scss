@@ -1,0 +1,159 @@
+body.trailer {
+  width: 100%;
+  margin: 0 auto;
+
+  .wrapper {
+    padding: 64px 20px;
+    @extend %regular;
+
+    @include hand {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .trailer-logo {
+    @include set-background('200e62-logo', png, 140px 24px, 0 0, no-repeat);
+    width: 140px;
+    height: 24px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100000;
+    text-indent: -9999px;
+    overflow: hidden;
+
+    @include hand {
+      left: 10px;
+    }
+  }
+
+  .full-site-link {
+    @include set-background('video_icons/close', png, 16px 16px, no-repeat, bottom right);
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    text-decoration: none;
+    border: none;
+    padding-right: 30px;
+    padding-bottom: 1px;
+    transition: opacity 300ms, width 500ms;
+
+    &:hover {
+      opacity: 0.4;
+    }
+
+    @include hand {
+      right: 10px;
+    }
+  }
+
+  .vjs-big-play-button {
+    display: none !important;
+  }
+}
+
+@import "trailer/video";
+
+.video-player {
+  width: 100%;
+  color: $black;
+}
+
+.video-js {
+  padding-top: 56.25%;
+  width: 100%;
+  height: 0;
+
+  .vjs-volume-menu-button,
+  .vjs-fullscreen-control,
+  .vjs-play-control,
+  .vjs-share {
+    height: 3em;
+    transition: opacity 300ms, width 500ms;
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+
+  .vjs-share {
+    background: transparent image-url('video_icons/share.png') no-repeat scroll center right;
+    background-size: 20px 19px;
+    position: relative;
+    top: -2px;
+    width: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+
+    &:hover,
+    .is-showing-options {
+      width: 18em;
+
+      .vjs-menu {
+        display: block;
+        width: 9999px;
+      }
+
+      .vjs-menu-content {
+        bottom: 5px;
+        background-color: transparent;
+      }
+
+      .vjs-link {
+        display: inline-block;
+        margin-right: 10px;
+        @extend %regular;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .vjs-menu {
+      left: 0;
+      height: auto;
+      margin-bottom: 0;
+    }
+  }
+
+  &.vjs-fullscreen {
+    padding-top: 0px;
+
+    .vjs-progress-control {
+      top: 11px;
+      left: 20px;
+      right: 20px;
+      width: auto;
+    }
+  }
+}
+
+.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+  opacity: 1;
+}
+
+.video-js .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  height: 60px;
+  width: 60px;
+  background-color: transparent;
+  border: none;
+  background-image: image-url("video_icons/play-large.svg");
+  background-size: 60px 60px;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+}
+
+.video-js:hover .vjs-big-play-button,
+.video-js .vjs-big-play-button:focus {
+  background-color: transparent;
+}

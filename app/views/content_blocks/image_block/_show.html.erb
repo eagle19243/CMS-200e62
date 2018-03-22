@@ -1,0 +1,20 @@
+<div class="content-block <%= css_class(cb) %> <%= cb.size %>" id="<%= css_id(cb) %>">
+  <div class="image">
+    <div class="placeholder" style="padding-top: <%= (cb.image.height.to_f / cb.image.width.to_f * 100).to_i %>%">
+      <%= image_tag(cb.image.attachment_url(:c4),
+                    class: 'lightboxable',
+                    alt: alt_text_for(cb),
+                    height: cb.image.height,
+                    width: cb.image.width,
+                    data: {
+                        slide_index: x + 1,
+                        id: css_lightbox_id(cb),
+                        hires: cb.image.attachment_url(:full_screen),
+                        caption: ft(cb.caption)
+                    }) %>
+    </div>
+    <div class="caption">
+      <%= f(cb.caption) %>
+    </div>
+  </div>
+</div>

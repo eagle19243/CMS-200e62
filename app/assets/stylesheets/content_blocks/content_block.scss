@@ -1,0 +1,8 @@
+.content-block {
+  @extend %inlineblock;
+  @include margin('bottom', $large_margin);
+
+  @include hand {
+    @include margin('bottom');
+  }
+}

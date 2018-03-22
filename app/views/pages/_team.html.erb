@@ -1,0 +1,22 @@
+<%= content_for :page_title, 'Our Team | 200 East 62 Street' %>
+<%= content_for :page_description, 'Browse our website to learn more about our experienced & dedicated team.' %>
+
+<div class="content-block image-block large">
+  <div class="image">
+    <div class="placeholder" style="padding-top: 69%;">
+      <%= image_tag('team.jpg', alt: 'Luxury Architects', width: 1800, height: 1422) %>
+    </div>
+  </div>
+</div>
+
+<div class="team-members">
+  <% @team_members.each do |team_member| %>
+    <div class="member">
+      <h2><span><%= team_member.name %></span></h2>
+      <%= f(team_member.bio) %>
+    </div>
+  <% end %>
+  <div class="member">
+    <h2>Website by <a href="http://www.noeassociates.com/" target="_blank">Noë & Associates</a></h2>
+  </div>
+</div>

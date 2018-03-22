@@ -1,0 +1,16 @@
+.team {
+  .team-members {
+    @extend %c1;
+    @extend %inlineblock;
+    @extend %regular;
+
+    .member {
+      max-width: 320px;
+      @include margin('bottom', $medium_margin);
+      h2 {
+        margin-bottom: 1.2em;
+        span { border-bottom: 1px solid; }
+      }
+    }
+  }
+}

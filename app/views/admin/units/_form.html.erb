@@ -1,0 +1,14 @@
+<div class="field">
+  <%= f.label :unit_line_id, 'Unit Line' %>
+  <% lines = UnitLine.all.collect{ |ul| [ul.name, ul.id] } %>
+  <%= f.select(:unit_line_id, options_for_select(lines, {selected: @unit.unit_line_id}), {}, class: 'select2') %>
+</div>
+
+<%= f.field :text_field, :floor %>
+<%= f.field :text_field, :letter %>
+
+<%= f.field :text_field, :price %>
+<%= f.field :text_field, :monthly_common_charges %>
+<%= f.field :text_field, :monthly_taxes %>
+
+<%= f.field :check_box, :active %>

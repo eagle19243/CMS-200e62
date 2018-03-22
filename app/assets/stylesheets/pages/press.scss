@@ -1,0 +1,49 @@
+.press {
+  .press-clipping {
+    @extend %c2;
+    @extend %inlineblock;
+    @extend %nogutters;
+
+    .image {
+      @extend %inlineblock;
+      width: 30%;
+      @extend %withgutters;
+    }
+
+    .text {
+      @extend %inlineblock;
+      @extend %withgutters;
+      width: 70%;
+      max-width: 400px;
+      @extend %large;
+      position: relative;
+      top: -4px;
+
+      ul {
+        margin-top: 1em;
+      }
+
+      .date-wrapper {
+        color: transparent;
+        .date {
+          color: $gray;
+          @extend %regular;
+        }
+      }
+    }
+
+    .placeholder {
+      position: relative;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+
+  }
+}

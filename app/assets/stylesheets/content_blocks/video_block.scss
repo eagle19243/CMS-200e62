@@ -1,0 +1,16 @@
+.video-block {
+  width: 100%;
+  background-color: $light-gray;
+  background-clip: content-box;
+  padding: 0 $gutter;
+
+  @include hand {
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+.video-block__player {
+  margin: 0 auto;
+  @extend %c4;
+}

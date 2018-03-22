@@ -1,0 +1,11 @@
+<div class="content-block jump-links-block">
+  <ul>
+    <% jump_links.each do |(title, slug, options)| %>
+      <% options ||= {} %>
+      <li class="<%= options[:class] %>">
+        <%= image_tag 'jump-link-arrow@2x.png', height: 5, alt: 'Jump Links', class: "arrow #{options[:class]}" %>
+        <%= link_to title, "#section-block-#{slug}", class: "jump-link #{options[:class]}" %>
+      </li>
+    <% end %>
+  </ul>
+</div>

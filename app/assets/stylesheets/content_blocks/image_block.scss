@@ -1,0 +1,33 @@
+.image-block {
+  @extend %nogutters;
+  &.fullscreen { @extend %c4; @extend %withgutters; }
+  &.large { @extend %c3; @extend %withgutters; }
+  &.medium { @extend %c2; @extend %withgutters; }
+  &.small { @extend %c1; @extend %withgutters; }
+
+  .image {
+    @extend %inlineblock;
+    width: 100%;
+
+    .placeholder {
+      position: relative;
+      background: $light_gray;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .caption {
+    @include margin('top', $tiny_margin);
+    @extend %regular;
+    font-family: $serif;
+    color: $gray;
+    b, strong { font-family: $sans; }
+  }
+}

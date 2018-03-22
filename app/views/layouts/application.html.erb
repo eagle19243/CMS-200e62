@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= page_title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="<%= asset_path('favicon@2x.gif') %>"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="<%= page_description %>" />
+  <% if @page.slug == 'home' %>
+    <link rel="canonical" href="http://www.200e62ny.com/" />
+    <meta name="google-site-verification" content="5wm7IIj7KfWXev7KKgywG10RIInhEJBf3wewR8c7irU" />
+    <meta name="msvalidate.01" content="F94AADEC1DB09B29BEC110276BB42BA8" />
+  <% end %>
+
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+
+  <script src="http://vjs.zencdn.net/ie8/1.1.1/videojs-ie8.min.js"></script>
+  <script src="http://vjs.zencdn.net/5.5.3/video.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP0L7WMM2K_QN9TiWQcmA1_9L_yp2S_yI&sensor=false"></script>
+  <%= javascript_include_tag 'application' %>
+
+  <%= render 'shared/google_analytics' %>
+</head>
+<body class="<%= body_classes %>">
+
+  <%= render 'shared/google_analytics_pageview' if Rails.env.production? %>
+
+  <div id="lightbox" style="display: none;">
+    <div id= "lightbox-navigation">
+      <a href="#" id="close-lightbox"><%= image_tag('close-button@2x.png', height: 25, width: 25, alt: 'Previous') %></a>
+      <div class="slick-counter"></div>
+    </div>
+    <div id="lightbox-slides"></div>
+  </div>
+
+  <%= link_to('200 E 62', root_path, class: 'logo no-underline') %>
+
+  <div class="content-to-replace">
+    <div class="not-the-footer">
+      <%= render 'shared/header' unless on_trailer? %>
+      <div class="wrapper">
+        <%= yield %>
+      </div>
+    </div>
+    <%= render 'shared/footer' unless on_trailer? %>
+  </div>
+
+  <%= render 'shared/patterns' %>
+
+  <%= render 'shared/google_remarketing' if Rails.env.production? %>
+  <%= render 'shared/crazy_egg' if Rails.env.production? %>
+  <%= render 'shared/conversion' %>
+
+</body>
+</html>

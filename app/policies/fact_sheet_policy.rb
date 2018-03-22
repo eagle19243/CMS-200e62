@@ -1,0 +1,2 @@
+class FactSheetPolicy < ApplicationPolicy
+end

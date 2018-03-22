@@ -1,0 +1,25 @@
+<div class="field">
+  <%= field.image_field :image %>
+</div>
+
+<div class="field">
+  <%= field.radio_button :size, 'small' %>
+  <%= label :size_small, 'Small' %><br />
+
+  <%= field.radio_button :size, 'medium' %>
+  <%= label :size_medium, 'Medium' %><br />
+
+  <%= field.radio_button :size, 'large' %>
+  <%= label :size_large, 'Large' %><br />
+
+  <%= field.radio_button :size, 'fullscreen' %>
+  <%= label :size_fullscreen, 'Fullscreen' %><br />
+</div>
+
+<div class="field">
+  <%= field.rich_text_area :caption, placeholder: 'Caption (optional)', class: 'caption' %>
+</div>
+
+<div class="field">
+  <%= field.text_field :alternate, placeholder: 'Alternate Text (optional)' %>
+</div>

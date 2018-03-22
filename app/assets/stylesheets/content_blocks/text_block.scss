@@ -1,0 +1,14 @@
+.text-block {
+  @extend %c1;
+  @extend %regular;
+
+  .text { max-width: 300px; }
+
+  &.large {
+    h2 { @extend %large; }
+    @extend %large;
+    .text { max-width: 400px; }
+  }
+
+  h2 { margin-bottom: .8em; }
+}

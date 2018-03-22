@@ -1,0 +1,15 @@
+<div id="header">
+  <div class="sticky-header visible">
+    <div class="navigation">
+      <%= render 'shared/navigation' %>
+    </div>
+
+    <div class="page-menu">
+      <%= image_tag('menu@2x.png', height: 13, alt: 'Menu', class: 'menu') %> <%= @page.name %>
+    </div>
+  </div>
+
+  <div class="initial navigation show">
+    <%= render 'shared/navigation' %>
+  </div>
+</div>

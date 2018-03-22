@@ -1,0 +1,4406 @@
+  [1m[36m (18.0ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (20.6ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to CreateUsers (20150119145427)
+  [1m[35m (12.7ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `username` varchar(255), `email` varchar(255), `password_digest` varchar(255), `is_admin` tinyint(1) DEFAULT 0, `is_sysop` tinyint(1) DEFAULT 0, `active` tinyint(1) DEFAULT 1, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145427')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateImages (20150119145428)
+  [1m[35m (13.8ms)[0m  CREATE TABLE `images` (`id` int(11) auto_increment PRIMARY KEY, `attachment` varchar(255), `parent_id` int(11), `parent_type` varchar(255), `created_at` datetime, `updated_at` datetime, `relationship_name` varchar(255), `caption` text, `position` int(11), `width` int(11), `height` int(11), `content_type` varchar(255)) ENGINE=InnoDB
+  [1m[36m (13.5ms)[0m  [1mCREATE  INDEX `index_images_on_parent_id_and_parent_type`  ON `images` (`parent_id`, `parent_type`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150119145428')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateContentBlocks (20150119145429)
+  [1m[36m (13.7ms)[0m  [1mCREATE TABLE `content_blocks` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `parent_type` varchar(255), `block_type` varchar(255), `position` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (13.8ms)[0m  CREATE  INDEX `index_content_blocks_on_parent_type_and_parent_id_and_block_type`  ON `content_blocks` (`parent_type`, `parent_id`, `block_type`) 
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145429')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTextBlocks (20150119145430)
+  [1m[35m (12.0ms)[0m  CREATE TABLE `text_blocks` (`id` int(11) auto_increment PRIMARY KEY, `title` varchar(255), `content_block_id` int(11), `body` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (14.6ms)[0m  [1mCREATE  INDEX `index_text_blocks_on_content_block_id`  ON `text_blocks` (`content_block_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150119145430')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateImageBlocks (20150119145431)
+  [1m[36m (11.4ms)[0m  [1mCREATE TABLE `image_blocks` (`id` int(11) auto_increment PRIMARY KEY, `title` varchar(255), `caption` text, `content_block_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (13.3ms)[0m  CREATE  INDEX `index_image_blocks_on_content_block_id`  ON `image_blocks` (`content_block_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145431')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSlideshowBlocks (20150119145432)
+  [1m[35m (13.2ms)[0m  CREATE TABLE `slideshow_blocks` (`id` int(11) auto_increment PRIMARY KEY, `content_block_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145432')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSlides (20150119145433)
+  [1m[35m (13.4ms)[0m  CREATE TABLE `slides` (`id` int(11) auto_increment PRIMARY KEY, `slideshow_block_id` int(11), `slide_type` varchar(255), `caption` text, `position` int(11), `video_id` text, `video_url` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145433')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateVideoBlocks (20150119145434)
+  [1m[35m (12.7ms)[0m  CREATE TABLE `video_blocks` (`id` int(11) auto_increment PRIMARY KEY, `url` text, `video_id` text, `title` varchar(255), `caption` text, `content_block_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119145434')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateRegistrants (20150119150733)
+  [1m[35m (12.4ms)[0m  CREATE TABLE `registrants` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `email` varchar(255), `phone` varchar(255), `country` varchar(255), `is_a_broker` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150119150733')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateUnits (20150203230903)
+  [1m[35m (15.4ms)[0m  CREATE TABLE `units` (`id` int(11) auto_increment PRIMARY KEY, `floor` int(11), `letter` varchar(255), `number_of_bedrooms` int(11), `number_of_bathrooms` int(11), `price` decimal(20,2), `indoor_square_feet` int(11), `outdoor_square_feet` int(11), `floorplan` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150203230903')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePressClippings (20150203235257)
+  [1m[35m (12.8ms)[0m  CREATE TABLE `press_clippings` (`id` int(11) auto_increment PRIMARY KEY, `blurb` text, `source` varchar(255), `url` varchar(255), `image_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150203235257')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTeamMembers (20150204012358)
+  [1m[35m (13.1ms)[0m  CREATE TABLE `team_members` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `biography` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150204012358')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePages (20150204013430)
+  [1m[35m (210.7ms)[0m  CREATE TABLE `pages` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `slug` varchar(255), `position` int(11), `active` tinyint(1) DEFAULT 1, `editable` tinyint(1) DEFAULT 1, `in_primary_nav` tinyint(1) DEFAULT 1, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150204013430')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddFieldsToRegistrants (20150217175457)
+  [1m[35m (17.0ms)[0m  ALTER TABLE `registrants` ADD `referrer` varchar(255)
+  [1m[36m (19.0ms)[0m  [1mALTER TABLE `registrants` ADD `residence_size` varchar(255)[0m
+  [1m[35m (18.6ms)[0m  ALTER TABLE `registrants` ADD `comments` text
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150217175457')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddAdditionalUnitFields (20150310224946)
+  [1m[35m (16.8ms)[0m  ALTER TABLE `units` ADD `interior_square_meters` int(11)
+  [1m[36m (18.9ms)[0m  [1mALTER TABLE `units` ADD `exterior_square_meters` int(11)[0m
+  [1m[35m (15.7ms)[0m  ALTER TABLE `units` ADD `status` varchar(255)
+  [1m[36m (17.4ms)[0m  [1mALTER TABLE `units` ADD `active` tinyint(1) DEFAULT 1[0m
+  [1m[35m (17.1ms)[0m  ALTER TABLE `units` ADD `monthly_taxes` int(11) DEFAULT 0
+  [1m[36m (15.0ms)[0m  [1mALTER TABLE `units` ADD `monthly_common_charges` int(11) DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150310224946')[0m
+  [1m[35m (1.4ms)[0m  COMMIT
+Migrating to ChangeSquareFeetColumnNames (20150310230250)
+  [1m[36m (14.2ms)[0m  [1mALTER TABLE `units` CHANGE `indoor_square_feet` `interior_square_feet` int(11) DEFAULT NULL[0m
+  [1m[35m (10.8ms)[0m  ALTER TABLE `units` CHANGE `outdoor_square_feet` `exterior_square_feet` int(11) DEFAULT NULL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150310230250')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to UpdatePressClippingColumns (20150311003424)
+  [1m[35m (16.4ms)[0m  ALTER TABLE `press_clippings` DROP `url`
+  [1m[36m (17.3ms)[0m  [1mALTER TABLE `press_clippings` ADD `publication_date` date[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150311003424')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddSizeFiledsToImageBlocks (20150323210236)
+  [1m[36m (16.4ms)[0m  [1mALTER TABLE `image_blocks` ADD `size` varchar(255) DEFAULT 'small'[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150323210236')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddLargeOptionToTextBlocks (20150323211108)
+  [1m[36m (18.9ms)[0m  [1mALTER TABLE `text_blocks` ADD `large` tinyint(1) DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150323211108')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateSectionBlocks (20150324131150)
+  [1m[36m (12.7ms)[0m  [1mCREATE TABLE `section_blocks` (`id` int(11) auto_increment PRIMARY KEY, `title` varchar(255), `body` text, `slug` varchar(255), `content_block_id` int(11), `hidden` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (13.0ms)[0m  CREATE  INDEX `index_section_blocks_on_content_block_id`  ON `section_blocks` (`content_block_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150324131150')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddFieldsToPressClippings (20150325145044)
+  [1m[35m (16.3ms)[0m  ALTER TABLE `press_clippings` ADD `position` int(11)
+  [1m[36m (15.4ms)[0m  [1mALTER TABLE `press_clippings` ADD `active` tinyint(1) DEFAULT 1[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150325145044')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreatePlaces (20150331231438)
+  [1m[36m (15.3ms)[0m  [1mCREATE TABLE `places` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `address` varchar(255), `zip` varchar(255), `category` varchar(255), `long` varchar(255), `lat` varchar(255), `active` tinyint(1) DEFAULT 1, `slug` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150331231438')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddFieldsToTeamMembers (20150401144357)
+  [1m[36m (16.9ms)[0m  [1mALTER TABLE `team_members` DROP `biography`[0m
+  [1m[35m (16.5ms)[0m  ALTER TABLE `team_members` ADD `bio` text
+  [1m[36m (17.4ms)[0m  [1mALTER TABLE `team_members` ADD `position` int(11)[0m
+  [1m[35m (14.1ms)[0m  ALTER TABLE `team_members` ADD `active` tinyint(1) DEFAULT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150401144357')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateFeatureBlock (20150401192548)
+  [1m[35m (14.2ms)[0m  CREATE TABLE `feature_blocks` (`id` int(11) auto_increment PRIMARY KEY, `caption` text, `content_block_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (12.8ms)[0m  [1mCREATE  INDEX `index_feature_blocks_on_content_block_id`  ON `feature_blocks` (`content_block_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150401192548')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddPinToBottomOptionToFeatureBlock (20150609122700)
+  [1m[36m (15.9ms)[0m  [1mALTER TABLE `feature_blocks` ADD `pin_to_bottom` tinyint(1) DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150609122700')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddUnitLineIdToUnits (20150716191213)
+  [1m[36m (17.4ms)[0m  [1mALTER TABLE `units` ADD `unit_line_id` int(11)[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150716191213')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateUnitLines (20150716191616)
+  [1m[36m (12.3ms)[0m  [1mCREATE TABLE `unit_lines` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `number_of_bedrooms` int(11), `number_of_bathrooms` int(11), `price` decimal(20,2), `interior_square_feet` int(11), `exterior_square_feet` int(11), `floorplan` varchar(255), `interior_square_meters` int(11), `exterior_square_meters` int(11), `status` varchar(255), `active` int(11) DEFAULT 1, `monthly_taxes` int(11) DEFAULT 0, `monthly_common_charges` int(11) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150716191616')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to ChangeUnitLineBathroomToDecimal (20150720130758)
+  [1m[36m (18.5ms)[0m  [1mALTER TABLE `unit_lines` CHANGE `number_of_bathrooms` `number_of_bathrooms` decimal(20,1) DEFAULT NULL[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150720130758')[0m
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to AddUrlToPressClippings (20150730183921)
+  [1m[36m (18.9ms)[0m  [1mALTER TABLE `press_clippings` ADD `url` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150730183921')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddAlternateToImages (20151027135029)
+  [1m[36m (16.7ms)[0m  [1mALTER TABLE `images` ADD `alternate` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20151027135029')[0m
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to AddAlternateToImageBlocks (20151027135044)
+  [1m[36m (21.4ms)[0m  [1mALTER TABLE `image_blocks` ADD `alternate` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20151027135044')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddAlternateToFeatureBlocks (20151027145654)
+  [1m[36m (17.1ms)[0m  [1mALTER TABLE `feature_blocks` ADD `alternate` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20151027145654')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateFactSheets (20161111045920)
+  [1m[36m (13.1ms)[0m  [1mCREATE TABLE `fact_sheets` (`id` int(11) auto_increment PRIMARY KEY, `language` varchar(255), `introduction` text, `pdf` varchar(255), `position` int(11), `active` tinyint(1) DEFAULT 1, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20161111045920')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddSlugToFactSheets (20161111051724)
+  [1m[36m (18.1ms)[0m  [1mALTER TABLE `fact_sheets` ADD `slug` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20161111051724')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateFactSheetColumnBlocks (20161111150851)
+  [1m[36m (12.6ms)[0m  [1mCREATE TABLE `fact_sheet_column_blocks` (`id` int(11) auto_increment PRIMARY KEY, `text` text, `content_block_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20161111150851')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddFootnotesToFactSheetColumnBlocks (20161111153006)
+  [1m[36m (18.4ms)[0m  [1mALTER TABLE `fact_sheet_column_blocks` ADD `footnotes` text[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20161111153006')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddTranslatedLanguageToFactSheets (20161117041722)
+  [1m[36m (18.0ms)[0m  [1mALTER TABLE `fact_sheets` ADD `translated_language` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20161117041722')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddDimensionsToVideoBlock (20170123235038)
+  [1m[36m (15.6ms)[0m  [1mALTER TABLE `video_blocks` ADD `width` int(11)[0m
+  [1m[35m (18.0ms)[0m  ALTER TABLE `video_blocks` ADD `height` int(11)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20170123235038')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM `users`  WHERE `users`.`username` = BINARY 'admin' LIMIT 1[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM `users`  WHERE `users`.`email` = BINARY 'hello@world.com' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `users` (`created_at`, `email`, `first_name`, `is_admin`, `is_sysop`, `last_name`, `password_digest`, `updated_at`, `username`) VALUES ('2018-03-14 18:30:53', 'hello@world.com', 'Admin', 1, 1, 'Admin', '$2a$10$gzy4EjCNCwqeh7LLS4d6IOaAHIw5aW7X3cXGizBbi.d6/tJBCZ8Ma', '2018-03-14 18:30:53', 'admin')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Home' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `pages` (`created_at`, `editable`, `in_primary_nav`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 0, 0, 'Home', 'home', '2018-03-14 18:30:53')[0m
+  [1m[35mPage Load (0.4ms)[0m  SELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Residences' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `pages` (`created_at`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 'Residences', 'residences', '2018-03-14 18:30:53')[0m
+  [1m[35mPage Load (0.3ms)[0m  SELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mPage Load (0.2ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Amenities' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `pages` (`created_at`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 'Amenities', 'amenities', '2018-03-14 18:30:53')
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC[0m
+  [1m[35mSQL (0.6ms)[0m  UPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mPage Load (0.2ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Design Vision' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `pages` (`created_at`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 'Design Vision', 'design-vision', '2018-03-14 18:30:53')
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Neighborhood' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `pages` (`created_at`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 'Neighborhood', 'neighborhood', '2018-03-14 18:30:53')[0m
+  [1m[35mPage Load (0.3ms)[0m  SELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 5 WHERE `pages`.`id` = 5[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Availability' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `pages` (`created_at`, `editable`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 0, 'Availability', 'availability', '2018-03-14 18:30:53')[0m
+  [1m[35mPage Load (0.4ms)[0m  SELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC
+  [1m[36mSQL (0.6ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1[0m
+  [1m[35mSQL (0.4ms)[0m  UPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 5 WHERE `pages`.`id` = 5[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 6 WHERE `pages`.`id` = 6
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mPage Load (0.2ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Team' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `pages` (`created_at`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 'Team', 'team', '2018-03-14 18:30:53')
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 5 WHERE `pages`.`id` = 5
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 6 WHERE `pages`.`id` = 6[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 7 WHERE `pages`.`id` = 7
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mPage Load (0.3ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Contact' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `pages` (`created_at`, `editable`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 0, 'Contact', 'contact', '2018-03-14 18:30:53')
+  [1m[36mPage Load (0.3ms)[0m  [1mSELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 5 WHERE `pages`.`id` = 5
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 6 WHERE `pages`.`id` = 6[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE `pages` SET `pages`.`position` = 7 WHERE `pages`.`id` = 7
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 8 WHERE `pages`.`id` = 8[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mPage Load (0.2ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`name` = 'Press' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `pages` (`created_at`, `editable`, `name`, `slug`, `updated_at`) VALUES ('2018-03-14 18:30:53', 0, 'Press', 'press', '2018-03-14 18:30:53')[0m
+  [1m[35mPage Load (0.3ms)[0m  SELECT `pages`.* FROM `pages`   ORDER BY `pages`.`position` ASC
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 1 WHERE `pages`.`id` = 1[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 2 WHERE `pages`.`id` = 2
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 3 WHERE `pages`.`id` = 3[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE `pages` SET `pages`.`position` = 4 WHERE `pages`.`id` = 4
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 5 WHERE `pages`.`id` = 5[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE `pages` SET `pages`.`position` = 6 WHERE `pages`.`id` = 6
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 7 WHERE `pages`.`id` = 7[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE `pages` SET `pages`.`position` = 8 WHERE `pages`.`id` = 8
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE `pages` SET `pages`.`position` = 9 WHERE `pages`.`id` = 9[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-14 11:31:14 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.4ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.6ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (36.2ms)
+  Rendered pages/show.html.erb within layouts/application (43.1ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (1.5ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (8.2ms)
+  Rendered shared/_footer.html.erb (0.8ms)
+  Rendered shared/_patterns.html.erb (0.6ms)
+  Rendered shared/_conversion.html.erb (0.8ms)
+Completed 200 OK in 4106ms (Views: 4057.6ms | ActiveRecord: 4.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-14 11:31:19 -0700
+
+
+Started GET "/assets/favicon@2x.gif" for 127.0.0.1 at 2018-03-14 11:31:20 -0700
+
+
+Started GET "/design-vision" for 127.0.0.1 at 2018-03-14 11:31:30 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"design-vision"}
+  [1m[35mPage Load (1.2ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'design-vision'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (15.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 4 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_design_vision.html.erb (19.2ms)
+  Rendered pages/show.html.erb within layouts/application (21.9ms)
+  Rendered shared/_google_analytics.html.erb (1.3ms)
+  Rendered shared/_navigation.html.erb (2.0ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (9.2ms)
+  Rendered shared/_footer.html.erb (0.7ms)
+  Rendered shared/_patterns.html.erb (0.3ms)
+  Rendered shared/_conversion.html.erb (0.7ms)
+Completed 200 OK in 723ms (Views: 703.0ms | ActiveRecord: 16.8ms)
+
+
+Started GET "/residences" for 127.0.0.1 at 2018-03-14 16:53:39 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"residences"}
+  [1m[35mPage Load (0.7ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'residences'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.8ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 2 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered shared/_show_content_blocks.html.erb (20.4ms)
+  Rendered pages/_residences.html.erb (22.3ms)
+  Rendered pages/show.html.erb within layouts/application (24.4ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.4ms)
+  Rendered shared/_header.html.erb (2.8ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 692ms (Views: 643.5ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-14 16:55:25 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 11:38:23 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (7.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (1.1ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (11.5ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.7ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (71.5ms)
+  Rendered pages/show.html.erb within layouts/application (79.2ms)
+  Rendered shared/_google_analytics.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (1.2ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (7.7ms)
+  Rendered shared/_footer.html.erb (0.6ms)
+  Rendered shared/_patterns.html.erb (0.3ms)
+  Rendered shared/_conversion.html.erb (0.4ms)
+Completed 200 OK in 841ms (Views: 737.3ms | ActiveRecord: 56.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:24 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 11:38:25 -0700
+
+
+Started GET "/residences" for 127.0.0.1 at 2018-03-15 11:55:46 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"residences"}
+  [1m[35mPage Load (0.5ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'residences'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.6ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 2 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered shared/_show_content_blocks.html.erb (4.0ms)
+  Rendered pages/_residences.html.erb (6.2ms)
+  Rendered pages/show.html.erb within layouts/application (7.5ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.6ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 478ms (Views: 475.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 11:55:47 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 11:55:48 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 11:55:48 -0700
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-15 11:55:48 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[35mPage Load (1.0ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mSQL (3.5ms)[0m  [1mSELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter[0m
+  Rendered pages/_availability.html.erb (107.1ms)
+  Rendered pages/show.html.erb within layouts/application (108.7ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.3ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 744ms (Views: 638.1ms | ActiveRecord: 39.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 11:55:49 -0700
+
+
+Started GET "/team" for 127.0.0.1 at 2018-03-15 11:55:50 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"team"}
+  [1m[35mPage Load (3.1ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'team'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mTeamMember Load (0.3ms)[0m  [1mSELECT `team_members`.* FROM `team_members`  WHERE `team_members`.`active` = 1  ORDER BY `team_members`.`position` ASC[0m
+  Rendered pages/_team.html.erb (63.4ms)
+  Rendered pages/show.html.erb within layouts/application (65.2ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.7ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.9ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 570ms (Views: 519.7ms | ActiveRecord: 43.2ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/team.jpg" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 11:55:51 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 12:50:06 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.4ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.4ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (6.9ms)
+  Rendered pages/show.html.erb within layouts/application (8.0ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.8ms)
+  Rendered shared/_header.html.erb (3.2ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1593ms (Views: 1590.2ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 12:50:08 -0700
+
+
+Started GET "/assets/favicon@2x.gif" for 127.0.0.1 at 2018-03-15 12:50:09 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:02:19 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.5ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.7ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.4ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (18.0ms)
+  Rendered pages/show.html.erb within layouts/application (19.0ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (1.0ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (4.0ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 1562ms (Views: 1557.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:20 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/favicon@2x.gif" for 127.0.0.1 at 2018-03-15 13:02:21 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:03:38 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:06:28 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.5ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.7ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (7.4ms)
+  Rendered pages/show.html.erb within layouts/application (8.3ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (1.0ms)
+  Rendered shared/_navigation.html.erb (0.9ms)
+  Rendered shared/_header.html.erb (4.9ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 1537ms (Views: 1532.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:30 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:06:31 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.4ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.6ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.4ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (7.1ms)
+  Rendered pages/show.html.erb within layouts/application (8.0ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (3.0ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 472ms (Views: 468.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:11 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:07:12 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.4ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.7ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (7.3ms)
+  Rendered pages/show.html.erb within layouts/application (8.1ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 458ms (Views: 454.1ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:27 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:07:28 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:08:12 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.5ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1
+  [1m[36mContentBlock Load (0.5ms)[0m  [1mSELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC[0m
+  Rendered pages/_home.html.erb (5.0ms)
+  Rendered pages/show.html.erb within layouts/application (5.8ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1547ms (Views: 1542.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:13 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:08:14 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:19:12 -0700
+Processing by PagesController#show as HTML
+  [1m[35mPage Load (0.5ms)[0m  SELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1
+  Rendered pages/_home.html.erb (1.2ms)
+  Rendered pages/show.html.erb within layouts/application (2.1ms)
+Completed 500 Internal Server Error in 8ms
+
+SyntaxError (/Users/bencurl/Documents/Work/Rails/200e62/app/views/pages/_home.html.erb:35: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+...w.facebook.com/200E62NY" target => "_blank" do @output_buffe...
+...                               ^
+/Users/bencurl/Documents/Work/Rails/200e62/app/views/pages/_home.html.erb:35: syntax error, unexpected keyword_do, expecting keyword_end
+...200E62NY" target => "_blank" do @output_buffer.safe_append='
+...                               ^
+/Users/bencurl/Documents/Work/Rails/200e62/app/views/pages/_home.html.erb:38: syntax error, unexpected tIDENTIFIER, expecting end-of-input
+...s://twitter.com/CorcSun" target => "_blank" do @output_buffe...
+...                               ^):
+  app/views/pages/_home.html.erb:35: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+  app/views/pages/_home.html.erb:35: syntax error, unexpected keyword_do, expecting keyword_end
+  app/views/pages/_home.html.erb:38: syntax error, unexpected tIDENTIFIER, expecting end-of-input
+  app/views/pages/show.html.erb:2:in `_app_views_pages_show_html_erb___1400466804076255358_70179044864500'
+
+
+  Rendered /Users/bencurl/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/actionpack-4.1.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.3ms)
+  Rendered /Users/bencurl/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/actionpack-4.1.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendered /Users/bencurl/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/actionpack-4.1.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/bencurl/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/actionpack-4.1.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (30.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:22:26 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.4ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (7.9ms)
+  Rendered pages/show.html.erb within layouts/application (8.8ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.9ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 1552ms (Views: 1548.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:22:28 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:22:29 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.8ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.4ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (7.5ms)
+  Rendered pages/show.html.erb within layouts/application (8.5ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.6ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 398ms (Views: 394.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:31 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:23:32 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.8ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.7ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (7.8ms)
+  Rendered pages/show.html.erb within layouts/application (8.8ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.4ms)
+  Rendered shared/_header.html.erb (2.3ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 429ms (Views: 425.3ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:01 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:29:02 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:31:46 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.8ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.7ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (7.6ms)
+  Rendered pages/show.html.erb within layouts/application (8.6ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.2ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (3.5ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1532ms (Views: 1527.9ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:31:48 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:31:49 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:33:11 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (8.7ms)
+  Rendered pages/show.html.erb within layouts/application (9.5ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (1.0ms)
+  Rendered shared/_header.html.erb (3.7ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1514ms (Views: 1510.3ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:33:12 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:12 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:12 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:12 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:33:13 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:33:36 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.4ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (5.0ms)
+  Rendered pages/show.html.erb within layouts/application (5.8ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.9ms)
+  Rendered shared/_header.html.erb (3.1ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1555ms (Views: 1550.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:33:37 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:33:38 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:33:39 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:33:39 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:33:39 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:34:01 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.5ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (5.4ms)
+  Rendered pages/show.html.erb within layouts/application (6.1ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.9ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1506ms (Views: 1502.6ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:34:03 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:34:04 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:55:04 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.5ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (8.5ms)
+  Rendered pages/show.html.erb within layouts/application (9.6ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.0ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 455ms (Views: 450.5ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:55:05 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:55:06 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 13:56:47 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.4ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (6.3ms)
+  Rendered pages/show.html.erb within layouts/application (7.0ms)
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_close-button.scss: ".video-js .vjs-control.vjs-close-button" failed to @extend ".vjs-icon-cancel".
+  The selector ".vjs-icon-cancel" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-cancel !optional" if the extend should be able to fail.
+
+
+WARNING on line 70 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_progress.scss: ".video-js .vjs-mouse-display" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 49 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_volume.scss: ".video-js .vjs-volume-level" failed to @extend ".vjs-icon-circle".
+  The selector ".vjs-icon-circle" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-circle !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_captions.scss: ".video-js .vjs-captions-button" failed to @extend ".vjs-icon-captions".
+  The selector ".vjs-icon-captions" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-captions !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_chapters.scss: ".video-js .vjs-chapters-button" failed to @extend ".vjs-icon-chapters".
+  The selector ".vjs-icon-chapters" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-chapters !optional" if the extend should be able to fail.
+
+
+WARNING on line 2 of /Users/bencurl/Documents/Work/Rails/200e62/app/assets/stylesheets/trailer/videojs/components/_subtitles.scss: ".video-js .vjs-subtitles-button" failed to @extend ".vjs-icon-subtitles".
+  The selector ".vjs-icon-subtitles" was not found.
+  This will be an error in future releases of Sass.
+  Use "@extend .vjs-icon-subtitles !optional" if the extend should be able to fail.
+
+
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (3.2ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 1506ms (Views: 1503.0ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:49 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 13:56:50 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-15 14:03:37 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (6.2ms)
+  Rendered pages/show.html.erb within layouts/application (7.0ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (3.2ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 437ms (Views: 433.5ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-15 14:03:38 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/outline-dark-twitter.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-15 14:03:39 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.6ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (8.2ms)
+  Rendered pages/show.html.erb within layouts/application (9.3ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.8ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 459ms (Views: 454.8ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:12 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-16 13:54:13 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-16 14:13:19 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.6ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (4.9ms)
+  Rendered pages/show.html.erb within layouts/application (5.9ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.0ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 450ms (Views: 445.0ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/assets/favicon@2x.gif" for 127.0.0.1 at 2018-03-16 14:13:20 -0700
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-16 14:13:22 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mSQL (0.7ms)[0m  SELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter
+  Rendered pages/_availability.html.erb (4.5ms)
+  Rendered pages/show.html.erb within layouts/application (7.0ms)
+  Rendered shared/_google_analytics.html.erb (0.4ms)
+  Rendered shared/_navigation.html.erb (2.1ms)
+  Rendered shared/_navigation.html.erb (0.7ms)
+  Rendered shared/_header.html.erb (7.7ms)
+  Rendered shared/_footer.html.erb (0.7ms)
+  Rendered shared/_patterns.html.erb (0.5ms)
+  Rendered shared/_conversion.html.erb (0.4ms)
+Completed 200 OK in 699ms (Views: 696.0ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-16 23:33:12 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.2ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.4ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (17.6ms)
+  Rendered pages/show.html.erb within layouts/application (18.7ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (3.2ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 450ms (Views: 419.5ms | ActiveRecord: 4.6ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-16 23:33:12 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:12 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:12 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-16 23:33:13 -0700
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-16 23:33:17 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[36mPage Load (0.5ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  SELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter
+  Rendered pages/_availability.html.erb (50.3ms)
+  Rendered pages/show.html.erb within layouts/application (52.3ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.7ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (3.5ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 715ms (Views: 654.5ms | ActiveRecord: 5.1ms)
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-16 23:36:00 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  SELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter
+  Rendered pages/_availability.html.erb (3.2ms)
+  Rendered pages/show.html.erb within layouts/application (4.1ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.5ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 423ms (Views: 420.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/assets/favicon@2x.gif" for 127.0.0.1 at 2018-03-16 23:36:01 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+Processing by PagesController#show as HTML
+  [1m[36mPage Load (0.7ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'home'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT  `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM `fact_sheets`  WHERE `fact_sheets`.`active` = 1[0m
+  [1m[35mContentBlock Load (0.5ms)[0m  SELECT `content_blocks`.* FROM `content_blocks`  WHERE `content_blocks`.`parent_id` = 1 AND `content_blocks`.`parent_type` = 'Page'  ORDER BY `content_blocks`.`position` ASC, `content_blocks`.`created_at` ASC
+  Rendered pages/_home.html.erb (6.1ms)
+  Rendered pages/show.html.erb within layouts/application (7.2ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.7ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+  Rendered shared/_patterns.html.erb (0.0ms)
+  Rendered shared/_conversion.html.erb (0.0ms)
+Completed 200 OK in 440ms (Views: 434.2ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/jquery.easing.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/jquery.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/jquery.placeholder.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:55 -0700
+
+
+Started GET "/assets/waypoints.turbolinks.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/slick.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/imagesloaded.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/feature_block.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/navigation.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/base.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/pretty_image_loading.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/transition.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/intro.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/register.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/lightbox.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/legal.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/google_map.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/availability.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/google_plus_one.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/slideshow.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/pdf_tracking.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/scrolled_down.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/videojs/custom_control_bar.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/trailer.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/close-button@2x.png" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/menu@2x.png" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/outline-dark-facebook.png" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/outline-dark-instagram.png" for 127.0.0.1 at 2018-03-17 06:35:56 -0700
+
+
+Started GET "/assets/200e62-logo.png" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/assets/lineto-circular-book.woff" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/assets/porte-cochere-home-hero.jpg" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/assets/home-pattern-left@2x.png" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/assets/home-pattern-right@2x.png" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/assets/footer-pattern.png" for 127.0.0.1 at 2018-03-17 06:36:00 -0700
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-17 08:11:18 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[36mPage Load (0.4ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mSQL (1.0ms)[0m  SELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter
+  Rendered pages/_availability.html.erb (6.0ms)
+  Rendered pages/show.html.erb within layouts/application (7.5ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.9ms)
+  Rendered shared/_navigation.html.erb (0.6ms)
+  Rendered shared/_header.html.erb (3.9ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 643ms (Views: 639.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/availability" for 127.0.0.1 at 2018-03-17 08:32:19 -0700
+Processing by PagesController#show as HTML
+  Parameters: {"id"=>"availability"}
+  [1m[36mPage Load (0.6ms)[0m  [1mSELECT  `pages`.* FROM `pages`  WHERE `pages`.`slug` = 'availability'  ORDER BY `pages`.`id` ASC LIMIT 1[0m
+  [1m[35mSQL (0.8ms)[0m  SELECT `units`.`id` AS t0_r0, `units`.`floor` AS t0_r1, `units`.`letter` AS t0_r2, `units`.`number_of_bedrooms` AS t0_r3, `units`.`number_of_bathrooms` AS t0_r4, `units`.`price` AS t0_r5, `units`.`interior_square_feet` AS t0_r6, `units`.`exterior_square_feet` AS t0_r7, `units`.`floorplan` AS t0_r8, `units`.`created_at` AS t0_r9, `units`.`updated_at` AS t0_r10, `units`.`interior_square_meters` AS t0_r11, `units`.`exterior_square_meters` AS t0_r12, `units`.`status` AS t0_r13, `units`.`active` AS t0_r14, `units`.`monthly_taxes` AS t0_r15, `units`.`monthly_common_charges` AS t0_r16, `units`.`unit_line_id` AS t0_r17, `unit_lines`.`id` AS t1_r0, `unit_lines`.`name` AS t1_r1, `unit_lines`.`number_of_bedrooms` AS t1_r2, `unit_lines`.`number_of_bathrooms` AS t1_r3, `unit_lines`.`price` AS t1_r4, `unit_lines`.`interior_square_feet` AS t1_r5, `unit_lines`.`exterior_square_feet` AS t1_r6, `unit_lines`.`floorplan` AS t1_r7, `unit_lines`.`interior_square_meters` AS t1_r8, `unit_lines`.`exterior_square_meters` AS t1_r9, `unit_lines`.`status` AS t1_r10, `unit_lines`.`active` AS t1_r11, `unit_lines`.`monthly_taxes` AS t1_r12, `unit_lines`.`monthly_common_charges` AS t1_r13 FROM `units` LEFT OUTER JOIN `unit_lines` ON `unit_lines`.`id` = `units`.`unit_line_id` WHERE `units`.`active` = 1  ORDER BY unit_lines.number_of_bedrooms, units.price, units.floor, units.letter
+  Rendered pages/_availability.html.erb (2.8ms)
+  Rendered pages/show.html.erb within layouts/application (4.2ms)
+  Rendered shared/_google_analytics.html.erb (0.1ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_navigation.html.erb (0.5ms)
+  Rendered shared/_header.html.erb (2.6ms)
+  Rendered shared/_footer.html.erb (0.2ms)
+  Rendered shared/_patterns.html.erb (0.1ms)
+  Rendered shared/_conversion.html.erb (0.1ms)
+Completed 200 OK in 517ms (Views: 514.1ms | ActiveRecord: 1.4ms)

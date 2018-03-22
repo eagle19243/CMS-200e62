@@ -1,0 +1,21 @@
+<%= content_for :page_title, '200 East 62 - Press' %>
+
+<% @press_clippings.each do |press| %>
+  <div class="content-block press-clipping">
+    <div class="image">
+      <% if press.image.present? && press.image.attachment_url.present? %>
+        <div class="placeholder" style="padding-top: <%= (press.image.height.to_f / press.image.width.to_f * 100).to_i %>%">
+          <%= link_to(image_tag(press.image.attachment_url(:c4), height: press.image.height, width: press.image.width), press.source_url, target: '_blank') %>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="text">
+      <%= f(press.blurb) %>
+      <ul class="attribution">
+        <li>&mdash;&nbsp;<%= link_to(press.source, press.source_url, target: '_blank') %></li>
+        <li class="date-wrapper">&mdash;&nbsp;<span class="date"><%= press.publication_date.strftime('%b %d, %Y') %></span></li>
+      </ul>
+    </div>
+  </div>
+<% end %>

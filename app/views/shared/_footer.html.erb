@@ -1,0 +1,21 @@
+<div class="footer-wrapper">
+  <% unless @page.slug == 'contact' || @page.slug == 'home' %>
+    <%= link_to "View Current Availability", page_path(:availability), class: "availability-link" %>
+
+    <div class="contact">
+      <div itemscope itemtype="http://schema.org/LocalBusiness">
+         <span itemprop="name">200 E 62</span><br />
+         <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+           <span itemprop="streetAddress">200 East 62 Street</span><br />
+           <span class="state" itemprop="addressLocality">New York</span>,
+           <span itemprop="addressRegion">New York</span>
+           <span itemprop="postalCode">10065</span>
+         </div>
+         Phone: <span itemprop="telephone"> 1 212 753 6200</span>
+      </div>
+      <span class="g-plusone" data-size="small" data-annotation="none"></span>
+    </div>
+  <% end %>
+  <div class="footer <%= @page.slug if @page && @page.slug %>">
+  </div>
+</div>

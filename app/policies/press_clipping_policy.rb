@@ -1,0 +1,2 @@
+class PressClippingPolicy < ApplicationPolicy
+end

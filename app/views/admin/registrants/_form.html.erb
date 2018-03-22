@@ -1,0 +1,29 @@
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div class="field">
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</div>
+
+<div class="field">
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+</div>
+
+<div class="field">
+  <%= f.label :residence_size %>
+  <%= f.select :residence_size, Registrant.residence_size_options %>
+</div>
+
+<div class="field">
+  <%= f.label :referrer %>
+  <%= f.select :referrer, Registrant.referrer_options %>
+</div>
+
+<div class="field">
+  <%= f.label :is_a_broker %>
+  <%= f.check_box :is_a_broker %>
+</div>

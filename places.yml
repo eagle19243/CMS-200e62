@@ -1,0 +1,154 @@
+defaults:
+  zip: 10012
+Home:
+  - name: 152 Elizabeth St
+    address: 152 Elizabeth St
+Food & Drink:
+  - name: Balaboosta
+    address: 214 Mulberry St
+  - name: Bar Primi
+    address: 325 Bowery
+    zip: 10003
+  - name: Black Seed Bagels
+    address: 170 Elizabeth St
+  - name: Café Gitane
+    address: 242 Mott St
+  - name: Cafe Habana
+    address: 17 Prince St
+  - name: Egg Shop
+    address: 151 Elizabeth St
+  - name: Estela
+    address: 47 E Houston St
+  - name: Fig 19
+    address: 131 Chrystie St
+    zip: 10002
+  - name: Freemans
+    address: "191 Chrystie Street #2F"
+    zip: 10002
+  - name: Gato
+    address: 324 Lafayette St
+  - name: Il Buco
+    address: 47 Bond St
+  - name: Jack's Wife Freda
+    address: 224 Lafayette St
+  - name: Ken & Cook
+    address: 19 Kenmare St
+  - name: La Esquina
+    address: 114 Kenmare St
+  - name: Momofuku Ko
+    address: 8 Extra Pl
+    zip: 10003
+  - name: Osteria Morini
+    address: 218 Lafayette Street
+  - name: Pearl & Ash
+    address: 220 Bowery
+  - name: Peasant
+    address: "194 Elizabeth St # A"
+  - name: Public
+    address: 210 Elizabeth St
+  - name: Rubirosa
+    address: 235 Mulberry St
+  - name: Sant Ambroeus
+    address: 265 Lafayette St
+  - name: Tartinery
+    address: 209 Mulberry St
+  - name: The Butcher's Daughter
+    address: 19 Kenmare St
+  - name: The Little Cupcake Bakeshop
+    address: 30 Prince St
+Retail:
+  - name: 3.1 Phillip Lim
+    address: 115 Mercer St
+  - name: Billy Reid
+    address: 54 Bond St
+  - name: Blue and Cream
+    address: 1 E 1st St
+  - name: Calypso St. Barth
+    address: 280 Mott St
+  - name: Craig Van Den Brulle
+    address: 192 Elizabeth St
+  - name: Dienst + Dotter
+    address: 411 Lafayette St
+    zip: 10003
+  - name: Dita
+    address: 273 Lafayette St
+  - name: Helmut Lang
+    address: 93 Mercer St
+  - name: Intermix
+    address: 332 Bowery
+  - name: Jil Sander
+    address: 30 Howard St
+    zip: 10013
+  - name: John Varvatos
+    address: 122 Spring Street
+  - name: Louis Purple
+    address: 323 Lafayette St
+  - name: McNally Jackson
+    address: 234 Mulberry St
+  - name: Oak
+    address: 28 Bond St
+  - name: Odin
+    address: 199 Lafayette St
+  - name: Rag & Bone
+    address: 73 E Houston St
+  - name: Sigerson Morrison
+    address: 28 Prince St
+  - name: Steven Alan
+    address: 229 Elizabeth St
+  - name: Unis
+    address: 226 Elizabeth St
+  - name: Vince
+    address: 16 Prince St
+  - name: Ralph Lauren
+    address: 109 Prince St
+  - name: Tory Burch
+    address: 257 Elizabeth St
+Culture:
+  - name: Bond Street Theater
+    address: 2 Bond St
+  - name: Bowery Ballroom
+    address: 6 Delancey St
+  - name: Canada
+    address: 333 Broome St
+    zip: 10002
+  - name: Elizabeth Street Garden
+    address: Elizabeth St
+  - name: Gallery Nine5
+    address: 24 Spring St
+  - name: Jack Hanley
+    address: 327 Broome St
+    zip: 10002
+  - name: Lehmann Maupin
+    address: 201 Chrystie St
+    zip: 10002
+  - name: Marlborough Gallery
+    address: 331 Broome Street
+    zip: 10002
+  - name: Mine # Impossible to locate address with ungoogleable name
+  - name: MoMA Design Store
+    address: 81 Spring St
+  - name: New Museum
+    address: 235 Bowery
+    zip: 10002
+  - name: Picture Room
+    address: 236 Mulberry Street
+  - name: Public Theater
+    address: 425 Lafayette St
+    zip: 10003
+  - name: Salon 94
+    address: 1 Freeman Alley
+    zip: 10002
+  - name: Sperone Westwater
+    address: 257 Bowery
+    zip: 10002
+  - name: Storefront for Art and Architecture
+    address: 97 Kenmare St
+  - name: Swiss Institute
+    address: 18 Wooster St
+    zip: 10013
+  - name: The Hole
+    address: 312 Bowery
+  - name: Walter de Maria's "Broken Kilometer"
+    address: 393 W Broadway
+  - name: Walter de Maria's "New York Earth Room"
+    address: 141 Wooster Street

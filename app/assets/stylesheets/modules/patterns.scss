@@ -1,0 +1,35 @@
+$animation-height: 1413px;
+$left-pattern-height: 1402px;
+$right-pattern-height: 1411px;
+
+.transition-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: $animation-height;
+  width: 200%;
+  opacity: 0;
+  z-index: 9998;
+  display: none;
+
+  .column {
+    height: 100%;
+    float: left;
+    transform: translate3d(0, 0, 0);
+
+    &.left {
+      height: $animation-height - $animation-height % ($left-pattern-height / 1px);
+      width: 20%;
+      background-image: image-url('home-pattern-left@2x.png');
+      background-position: right 0;
+    }
+
+    &.right {
+      position: relative;
+      height: $animation-height - $animation-height % ($right-pattern-height / 1px);
+      width: 50%;
+      background-image: image-url('home-pattern-right@2x.png');
+      background-position: left 0;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+.fact-sheet {
+  .contact-details {
+    font-family: $serif;
+    margin-bottom: $margin;
+    @extend %whitespacefix;
+
+    > div {
+      @extend %inlineblock;
+      @extend %c-5;
+      @extend %regular;
+
+      @include hand {
+        width: 100%;
+        margin-bottom: $regular-leading;
+      }
+    }
+
+    h1,
+    .download a {
+      font-family: $sans;
+      display: inline-block;
+      margin-bottom: $regular-leading;
+      border-bottom: 1px solid $gray;
+
+      @include hand {
+        margin-bottom: 2px;
+      }
+    }
+  }
+
+  .introduction {
+    width: 66%;
+    margin-left: 33.33%;
+    margin-bottom: $margin * 1.4;
+    @extend %withgutters;
+    @extend %large;
+
+    @include hand {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .content-blocks {
+    @extend %whitespacefix;
+  }
+}
+
+.fact-sheet-column-block {
+  @extend %c1;
+  @extend %regular;
+
+  img {
+    display: none;
+  }
+
+  strong,
+  b {
+    font-family: $sans;
+    border-bottom: 1px solid $gray;
+  }
+
+  ul {
+    margin-bottom: $small-margin * 2;
+  }
+
+  li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+
+  .image {
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: $small-margin * 1.5;
+  }
+
+  .footnotes,
+  .text {
+    font-family: $serif;
+  }
+}

@@ -1,0 +1,48 @@
+<% content_for :page_title, "#{@fact_sheet.language} Fact Sheet | 200 East 62 Street" %>
+
+<div class="fact-sheet">
+  <div class="contact-details">
+    <div class="sales-gallery">
+      <h1>Onsite Sales Gallery</h1>
+
+      <div itemscope itemtype="http://schema.org/LocalBusiness">
+        <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+          <span itemprop="streetAddress">200 East 62 Street</span><br />
+          <span itemprop="streetAddress">Suite 20A</span><br />
+          <span itemprop="addressLocality">New York</span>,
+          <span itemprop="addressRegion">New York</span>
+          <span itemprop="postalCode">10065</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-number">
+      <h1>Telephone</h1>
+
+      <div>212 753 6200</div>
+    </div>
+
+    <div class="email-address">
+      <h1>Email</h1>
+
+      <div>info@200e62ny.com</div>
+    </div>
+
+    <% if @fact_sheet.pdf.present? %>
+      <div class="download">
+        <%= link_to "Download as PDF",
+                    @fact_sheet.pdf.attachment_url,
+                    target: "_blank",
+                    data: { language: @fact_sheet.language } %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="introduction">
+    <%= raw @fact_sheet.introduction %>
+  </div>
+
+  <div class="content-blocks">
+    <%= render 'shared/show_content_blocks' %>
+  </div>
+</div>

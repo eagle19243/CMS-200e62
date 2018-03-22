@@ -1,0 +1,174 @@
+.lightboxable {
+  &:hover { cursor: pointer; }
+}
+
+#lightbox {
+  position: fixed;
+  z-index: 100001;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $white;
+  @extend %regular;
+
+  a { border: none; }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+  }
+
+  .slick-counter {
+    position: fixed;
+    top: 25px;
+    left: 80px;
+    @include transform(translateX(-50%));
+    @extend %regular;
+    z-index: 101;
+    font-family: $sans;
+    color: $gray;
+  }
+
+  .arrow {
+    position: fixed;
+    top: 20px;
+    z-index: 101;
+    &.prev { right: 60px; }
+    &.next { right: 20px; }
+    &:hover { cursor: pointer; }
+  }
+}
+
+#close-lightbox {
+  position: fixed;
+  z-index: 101;
+  top: 20px;
+  left: 20px;
+}
+
+#lightbox-slides {
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox-slide {
+  width: 100%;
+  height: 100%;
+  padding: 65px 20px 20px 20px;
+
+  @include hand {
+    padding-bottom: 50px;
+  }
+
+  .lightbox-slide-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .image {
+    height: 100%;
+    width: 100%;
+    padding: 0 !important;
+    background: transparent none no-repeat scroll top left;
+    background-size: contain;
+    position: relative;
+
+    // img is only used for checking when an image is loaded
+    img {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white image-url('loading-alt-fast@2x.gif') no-repeat scroll center center;
+      background-size: 7px 248px;
+      opacity: 0;
+    }
+
+    &.loading::before {
+      opacity: 1;
+    }
+  }
+
+  .caption {
+    display: none;
+  }
+}
+
+.slick-track {
+  height: 100%;
+}
+
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 100%;
+
+  img {
+    display: block;
+  }
+
+  &.slick-loading img {
+    display: none;
+  }
+
+  &.dragging img {
+    pointer-events: none;
+  }
+
+  .slick-initialized & {
+    display: block;
+  }
+
+  .slick-loading & {
+    visibility: hidden;
+  }
+}
+
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-box-sizing: border-box;
+  -webkit-touch-callout: none;
+       -ms-touch-action: none;
+           touch-action: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+
+.slick-slider .slick-list, .slick-track, .slick-slide, .slick-slide img {
+  -webkit-transform: translate3d(0, 0, 0);
+     -moz-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+       -o-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}

@@ -1,0 +1,46 @@
+<div class="unit-details">
+
+  <h1>
+    <span class="name">Residence <%= unit.name %></span>
+  </h1>
+
+  <div class="space">
+    <div class="bedrooms">
+      <%= pluralize(unit.unit_line.number_of_bedrooms, "Bedroom") %>
+    </div>
+    <div class="bathrooms">
+      <%= pluralize(number_to_human(unit.unit_line.number_of_bathrooms, precision: 2, strip_insignificant_zeros: true), "Bathroom") %>
+    </div>
+
+    <% if unit.unit_line.area.exterior? %>
+      <div class="square-feet-interior">
+        Interior: <%= unit.unit_line.area.interior %> sq ft
+      </div>
+      <div class="square-feet-exterior">
+        Exterior: <%= unit.unit_line.area.exterior %> sq ft
+      </div>
+    <% else %>
+      <div class="square-feet-interior">
+        <%= unit.unit_line.area.interior %> sq ft
+      </div>
+    <% end %>
+  </div>
+
+  <div class="cost">
+    <div class="price">
+      <%= price_or_dash(unit.price) %>
+    </div>
+    <div class="dues">
+      <%= price_or_dash(unit.monthly_common_charges) %>/mo maintenance
+    </div>
+    <div class="taxes">
+      <%= price_or_dash(unit.monthly_taxes) %> Est. Mo. RE Taxes
+    </div>
+  </div>
+
+  <% if unit.unit_line.show_floor_plan_pdf? %>
+    <div class="floor-plan">
+      <%= link_to_floor_plan "Download Hi-Res Floor Plan", unit %>
+    </div>
+  <% end %>
+</div>

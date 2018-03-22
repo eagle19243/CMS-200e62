@@ -1,0 +1,23 @@
+.section-block {
+  @extend %c1;
+  @extend %large;
+
+  .content { max-width: 400px; }
+
+  h1 {
+    @extend %large;
+    margin-bottom: .8em;
+  }
+
+  li {
+    list-style: outside disc;
+    margin-left: 1.2em;
+    padding-left: 0.5em;
+  }
+
+  &.hide {
+    display: block;
+    height: 1px;
+    margin: 0 !important;
+  }
+}

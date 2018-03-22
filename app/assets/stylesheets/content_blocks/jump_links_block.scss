@@ -1,0 +1,47 @@
+.jump-links-block {
+  @extend %c4;
+  @extend %regular;
+  @include margin('bottom', $medium_margin);
+
+  .arrow {
+    position: relative;
+    top: -2px;
+
+    &.previous {
+      transform: rotate(180deg);
+    }
+  }
+
+  a {
+    color: $black;
+    text-decoration: none;
+    margin-left: 5px;
+    border: none;
+  }
+
+  li {
+    @extend %inlineblock;
+    margin: 0 50px 0 0;
+
+    @include hand {
+      display: block;
+      margin: 0 0 5px;
+    }
+
+    &.upcoming {
+      a {
+        border-bottom: 1px solid $gray;
+
+        &:hover {
+          border-color: $black;
+        }
+      }
+
+      + .upcoming {
+        a {
+          border: none;
+        }
+      }
+    }
+  }
+}

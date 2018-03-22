@@ -1,0 +1,44 @@
+.footer-wrapper {
+  .availability-link {
+    display: inline-block;
+    margin: 0 $gutters $small-margin;
+
+    @include hand {
+      margin: 0 #{$gutters / 2} $small-margin;
+    }
+  }
+
+  .contact {
+    padding-left: 20px;
+    @extend %withgutters;
+    @extend %small;
+
+    @include hand {
+      padding-left: 10px;
+    }
+
+    li {
+      padding-right: 10px;
+      @extend %inlineblock;
+
+      @include hand {
+        display: block;
+      }
+    }
+  }
+
+  .footer {
+    @include margin('top');
+    @include set-background('footer-pattern', 'png', '7px 236px', '0 0', 'repeat-x');
+    height: 236px;
+    width: 100%;
+
+    &.home {
+      display: none;
+
+      @include hand {
+        display: block;
+      }
+    }
+  }
+}

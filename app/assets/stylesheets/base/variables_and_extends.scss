@@ -1,0 +1,115 @@
+// Colors
+$black:      #000;
+$gray:       #999999;
+$light_gray: #e6e6e6;
+$bg_gray:    #f8f8f8;
+$white:      #fff;
+$red:        #f26667;
+
+// Fonts
+$sans_defaults: 'circular', Helvetica, Arial, sans-serif;
+$sans: $sans_defaults;
+$serif_defaults: 'Times New Roman', Times, serif;
+$serif: $serif_defaults;
+
+// Type sizes
+$large_size:      20px;
+$large_leading:   1.2em;
+$regular_size:    14px;
+$regular_leading: 1.2em;
+$small_size:      12px;
+$small_leading:   1.2em;
+
+// Spacing
+$gutter:  10px;
+$gutters: $gutter * 2;
+
+// Margins
+$large_margin:  100px;
+$margin:        60px;
+$medium_margin: 30px;
+$small_margin:  15px;
+$tiny_margin:   7px;
+
+// Breakpoints
+$ext_min_width:  1230px;
+$ext_max_width:  9000000px;
+
+$desk_min_width:  960px;
+$desk_max_width:  1229px;
+
+$tab_min_width:  768px;
+$tab_max_width:  959px;
+
+$hand_min_width:  0;
+$hand_max_width:  767px;
+$hand_unit_width: 100%;
+
+%whitespacefix {
+  font-size: 0;
+  line-height: 0;
+  letter-spacing: -4px;
+}
+
+%inlineblock {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  letter-spacing: 0;
+}
+
+//@include set_background('slideshow_block/arrow-left', 'gif', 'Wpx Hpx', '0 0', 'repeat-x');
+@mixin set_background($img, $file_type, $size, $position, $repeat: 'no-repeat', $color: transparent) {
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 192dpi) {
+    background: $color image-url($img + '@2x.' + $file_type) #{$repeat} #{$position} !important;
+    -moz-background-size: #{$size};
+    background-size: #{$size} !important;
+  }
+  background: $color image-url($img + '.' + $file_type) #{$repeat} #{$position};
+}
+
+// General Breakpoint mixins
+@mixin ext {
+  @media only screen and (min-width: $ext_min_width) and (max-width: $ext_max_width) { @content; }
+}
+
+@mixin desk {
+  @media only screen and (min-width: $desk_min_width) and (max-width: $desk_max_width) { @content; }
+}
+
+@mixin tab {
+  @media only screen and (min-width: $tab_min_width) and (max-width: $tab_max_width) { @content; }
+}
+
+@mixin hand {
+  @media only screen and (min-width: $hand_min_width) and (max-width: $hand_max_width) { @content; }
+}
+
+// @include transition(background-color, 150ms, ease-out);
+@mixin transition($attribute, $time, $easing) {
+  -webkit-transition: $attribute $time $easing;
+     -moz-transition: $attribute $time $easing;
+       -o-transition: $attribute $time $easing;
+          transition: $attribute $time $easing;
+}
+
+// @include @include transform(translate(-50%, -50%));
+@mixin transform($value) {
+  -webkit-transform: $value;
+     -moz-transform: $value;
+      -ms-transform: $value;
+       -o-transform: $value;
+          transform: $value;
+}
+
+@mixin margin($direction, $value: $margin) {
+  @if $direction == 'top' {
+    margin-top: $value;
+  } @else if $direction == 'right' {
+    margin-right: $value;
+  } @else if $direction == 'bottom' {
+    margin-bottom: $value;
+  } @else {
+    margin-left: $value;
+  }
+}

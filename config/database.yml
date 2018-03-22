@@ -1,0 +1,30 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password:
+#  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: p200e62_dev
+
+test:
+  <<: *default
+  database: p200e62_test
+
+# The production server names are swapped because of a misconfiguration of the
+# staging server.
+# TODO: rename databases to reflect actual use
+staging:
+  <<: *default
+  database: p200e62_dev
+  username: root
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+
+production:
+  <<: *default
+  database: p200e62_staging
+  username: root
+  password: <%= ENV["DATABASE_PASSWORD"] %>

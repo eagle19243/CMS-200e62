@@ -1,0 +1,2 @@
+class TeamMemberPolicy < ApplicationPolicy
+end

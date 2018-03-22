@@ -1,0 +1,18 @@
+<div class="content-block <%= css_class(cb) %>" id="<%= css_id(cb) %>">
+  <% if cb.image.present? && cb.image.attachment? %>
+    <div class="image"
+         style="background-image: url(<%= cb.image.attachment_url(:full_screen) %>); padding-top: <%= (cb.image.height.to_f / cb.image.width.to_f * 100).to_i %>%">
+      <%= image_tag cb.image.attachment_url(:c4),
+                    height: cb.image.height,
+                    width: cb.image.width %>
+    </div>
+  <% end %>
+
+  <div class="text">
+    <%= raw cb.text %>
+  </div>
+
+  <div class="footnotes">
+    <%= raw cb.footnotes %>
+  </div>
+</div>

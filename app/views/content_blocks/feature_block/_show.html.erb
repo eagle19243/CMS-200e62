@@ -1,0 +1,14 @@
+<div class="content-block <%= css_class(cb) %>" id="<%= css_id(cb) %>">
+  <div class="image <%= 'pin-bottom' if cb.pin_to_bottom? %>" style="background-image: url(<%= cb.image.attachment_url(:full_screen) %>);">
+    <%= image_tag(cb.image.attachment_url(:c4),
+                  class: 'lightboxable',
+                  alt: alt_text_for(cb),
+                  height: cb.image.height,
+                  width: cb.image.width,
+                  data: {
+                      id: css_lightbox_id(cb),
+                      hires: cb.image.attachment_url(:full_screen),
+                      caption: ft(cb.caption)
+                  }) %>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<%= content_for :page_title, 'Design Vision | 200 East 62 Street' %>
+
+<% @page.content_blocks.each do |cb| %>
+  <%= render "content_blocks/#{cb.path_name}/show", cb: cb.send(cb.path_name), x: image_block_index(cb) %>
+<% end %>

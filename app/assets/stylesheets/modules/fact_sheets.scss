@@ -1,0 +1,24 @@
+.fact-sheets {
+  margin: 10px $gutter;
+  display: inline-block;
+  @extend %regular;
+
+  @include hand {
+    margin: 0 $gutter;
+    display: block;
+  }
+
+  h1 {
+    margin-bottom: 0.3em;
+    @extend %regular;
+  }
+
+  a {
+    line-height: 1.1em;
+    display: inline-block;
+  }
+
+  .language {
+    margin-bottom: 0.3em;
+  }
+}

@@ -1,0 +1,147 @@
+.home {
+  .home__introduction {
+    .content-block {
+      margin-bottom: 1.3em;
+    }
+  }
+
+  .content-blocks {
+    margin-top: $margin;
+    color: lighten($gray, 20);
+    transition: color 1000ms;
+
+    .is-scrolled & {
+      color: $black;
+    }
+  }
+
+  .content-block {
+    width: 480px;
+    display: block;
+    margin-bottom: 1.3em;
+
+    @include hand {
+      width: 100%;
+    }
+  }
+
+  .pattern-animation {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 480px + $gutters * 2;
+    width: 200%;
+    background-color: $white;
+
+    @include hand {
+      display: none;
+    }
+
+    .hero {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-image: image-url('porte-cochere-home-hero.jpg');
+      background-repeat: no-repeat;
+      background-position: right center;
+      -webkit-background-size: cover;
+         -moz-background-size: cover;
+           -o-background-size: cover;
+              background-size: cover;
+      opacity: 0;
+      animation: hero ease 3s;
+      animation-fill-mode: forwards;
+      -webkit-animation-delay: 3s; /* Chrome, Safari, Opera */
+              animation-delay: 3s;
+    }
+
+    .column {
+      width: 50%;
+      height: 100%;
+      float: left;
+      background: transparent none repeat scroll 0 0;
+      transition: width 10s;
+    }
+
+    .left {
+      width: 20%;
+      background-image: image-url('home-pattern-left@2x.png');
+      background-position: right -1827px;
+      animation: left-column ease-out 4s;
+    }
+
+    .right {
+      background-image: image-url('home-pattern-right@2x.png');
+      background-position: left -1412px;
+      animation: right-column ease-out 3s;
+    }
+  }
+}
+
+.home__address {
+  width: 180px;
+  margin: 10px $gutter;
+  display: inline-block;
+  line-height: 1.2em;
+  @extend %regular;
+
+  @include hand {
+    margin: 0 $gutter 2em;
+    display: block;
+  }
+
+  h1,
+  .street-address,
+  .unit-number,
+  .region, {
+    margin-bottom: 0.3em;
+  }
+
+  .zip-code {
+    margin-left: 3px;
+  }
+
+  .social-links {
+    margin-top: 20px;
+    a {
+      border-bottom: 0px;
+      margin-right: 15px;
+      img{
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+.on-home {
+  .wrapper {
+    max-width: inherit;
+  }
+}
+
+@keyframes left-column {
+  from {
+    background-position: right 0px;
+  } to {
+    background-position: right -1827px;
+  }
+}
+
+@keyframes right-column {
+  from {
+    background-position: left 0px;
+  } to {
+    background-position: left -1412px;
+  }
+}
+
+@keyframes hero {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}

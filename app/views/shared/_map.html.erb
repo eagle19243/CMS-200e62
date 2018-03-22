@@ -1,0 +1,35 @@
+<div id="map" class="map-area hide">
+  <div class="map">
+    <div id="map-canvas"></div>
+  </div>
+
+  <div id="map-controller">
+    <% Place.public_places.each_with_index do |category, x| %>
+      <div class="category-places" id="<%= place_css_id(category) %>">
+        <h2>
+          <%#= image_tag("gpin-#{category[0].parameterize}@2x.png", height: 10, style: 'padding-right: 5px;') %><%= category[0] %>
+        </h2>
+        <% category.last.each_slice(places_per_column(category.last)) do |places_column| %>
+          <ul class="places-column">
+            <% places_column.each do |place| %>
+              <li id="<%= place.slug %>">
+                <a><%= place.name %></a>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  (function() {
+    var home   = <%= raw(Place.home_pin) %>,
+        places = <%= raw(Place.grouped_places) %>;
+
+    if (places.length > 0 && home.length > 0) {
+      new Map(places, home);
+    }
+  })()
+</script>

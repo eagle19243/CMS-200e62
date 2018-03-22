@@ -1,0 +1,16 @@
+<div class="field">
+  <%= field.image_field :image %>
+</div>
+
+<div class="field">
+  <%= field.label :pin_to_bottom, 'Pin image to bottom?' %>
+  <%= field.check_box :pin_to_bottom %>
+</div>
+
+<div class="field">
+  <%= field.rich_text_area :caption, placeholder: 'Caption (optional)', class: 'caption' %>
+</div>
+
+<div class="field">
+  <%= field.text_field :alternate, placeholder: 'Alternate Text (optional)' %>
+</div>
